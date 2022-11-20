@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
 		boolean b = false;
 		JavaMailSenderImpl sender = new JavaMailSenderImpl();
 		String id = "browncarrotmarket@gmail.com";
-		String passwd = "ltxxmvgyzxwwfgpc";
+		String passwd = "temp"; //ltxxmvgyzxwwfgpc
 
 		sender.setHost("smtp.gmail.com");
 		sender.setPort(587);

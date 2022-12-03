@@ -1,10 +1,11 @@
 package com.itwill.brown_carrot_market.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itwill.brown_carrot_market.dao.UserInfoDao;
@@ -23,6 +24,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Autowired
 	@Qualifier("userDaoImpl")
 	private UserInfoDao userDao;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public UserInfoServiceImpl() throws Exception {
 		System.out.println("#### UserServiceImpl() : 디폴트생성자 호출  ");
@@ -43,8 +46,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 			// 아이디중복
 			return 0;
 		} else {
-			// 아이디안중복
+			// 아이디중복이 아닐경우
 			// 2.회원가입
+			//BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+			String securePassword = passwordEncoder.encode(user.getUser_pw()); //암호화
+			user.setUser_pw(securePassword);
 			int insertRowCount = userDao.createUser(user);
 
 			if (address != null) {
@@ -92,7 +98,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 			result = 0;
 		} else {
 			// 아이디존재함
-			if (user.isMatchPassword(password)) {
+			//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			if (passwordEncoder.matches(password,user.getUser_pw())) {
+			//if (user.isMatchPassword(password)) {
 				// 패쓰워드일치(로그인성공)
 				result = 2;
 			} else {
@@ -131,6 +139,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	//비밀번호 업데이트
 	@Override
 	public int updatePwById(UserInfo userInfo) throws Exception {
+		String securePassword = passwordEncoder.encode(userInfo.getUser_pw()); //암호화
+		userInfo.setUser_pw(securePassword);
 		return userDao.updatePwById(userInfo);
 	}
 
@@ -143,8 +153,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	 * 회원수정
 	 */
 	@Override
-	public int update(UserInfo user) throws Exception {
-		return userDao.updateUser(user);
+	public int update(UserInfo userInfo) throws Exception {
+		String securePassword = passwordEncoder.encode(userInfo.getUser_pw()); //암호화
+		userInfo.setUser_pw(securePassword);
+		return userDao.updateUser(userInfo);
 	}
 
 	@Override

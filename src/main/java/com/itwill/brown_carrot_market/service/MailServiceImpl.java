@@ -13,6 +13,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itwill.brown_carrot_market.dao.UserInfoDao;
@@ -25,6 +26,8 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	@Qualifier("userDaoImpl")
 	private UserInfoDao userDao;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public boolean mailsender(Invitation invitation) throws Exception {
@@ -81,6 +84,7 @@ public class MailServiceImpl implements MailService {
 	public boolean mailsenderFindPw(UserInfo userInfo) throws Exception {
 		
 		String newPw = RandomString();
+		String securePassword = passwordEncoder.encode(newPw); //암호화
 		
 		boolean b = false;
 		JavaMailSenderImpl sender = new JavaMailSenderImpl();
@@ -120,7 +124,7 @@ public class MailServiceImpl implements MailService {
 		try {
 			sender.send(preparator);
 			//메일이 성공적으로 보내지면, UPDATE user_pw
-			userInfo.setUser_pw(newPw);
+			userInfo.setUser_pw(securePassword);
 			userDao.updatePwById(userInfo);
 			
 			b = true;

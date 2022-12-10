@@ -77,6 +77,7 @@
 							<li class=""><a href="" id="user_view_addresses">내 동네설정</a></li>
 							<li class=""><a href="#" id="">흙당근 포인트 내역</a></li>
 							<li class=""><a href="#" id="user_received_reviewList">받은 거래 후기</a></li>
+							<li class=""><a href="#" id="user_received_reviewList_paging">받은 거래 후기(w.paging)</a></li>
 							<li class=""><a href="user_logout_action">로그아웃</a></li>
 							<li class=""><a href="#" id="user_remove_form" style="color:#6c757d">회원탈퇴</a></li>
 						</ul>
@@ -583,13 +584,28 @@
 						method:'POST',
 						/*dataType:'json',*/
 						success:function(jsonResult){
-							//console.log(jsonResult);
+							console.log(jsonResult);
 							$('#my-account-content').html(UserHtmlContents.user_received_reviewList2(jsonResult.data));
 						}
 					});
 				e.preventDefault();
 			});
 			
+			/* user_received_reviewList_paging********************************/
+			$(document).on('click', '#user_received_reviewList_paging', function(e) {
+				$('.my-account-navigation > ul li').removeClass('active');
+				$(e.target).closest('li').addClass('active');
+				 $.ajax({
+						url:'user_received_reviewList_paging_json',
+						method:'POST',
+						/*dataType:'json',*/
+						success:function(jsonResult){
+							console.log(jsonResult.data);
+							$('#my-account-content').html(UserHtmlContents.user_received_reviewList_paging(jsonResult.data));
+						}
+					});
+				e.preventDefault();
+			});
 			
 			/* user_remove_form ********************************/
 			$(document).on('click', '#user_remove_form', function(e) {

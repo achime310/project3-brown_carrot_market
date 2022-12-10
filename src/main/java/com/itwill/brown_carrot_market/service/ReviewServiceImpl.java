@@ -11,9 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.itwill.brown_carrot_market.dao.ReviewDao;
 import com.itwill.brown_carrot_market.dao.ReviewImageDao;
 import com.itwill.brown_carrot_market.dao.UserInfoDao;
+import com.itwill.brown_carrot_market.dto.Notice;
 import com.itwill.brown_carrot_market.dto.Review;
 import com.itwill.brown_carrot_market.dto.ReviewImage;
 import com.itwill.brown_carrot_market.dto.UserInfo;
+import com.itwill.brown_carrot_market.util.PageMaker;
+import com.itwill.brown_carrot_market.util.PageMakerDto;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -34,6 +37,23 @@ public class ReviewServiceImpl implements ReviewService{
 		System.out.println("#### ReviewServiceImpl() : 디폴트생성자 호출");
 	}
 
+	/*****페이징 처리 전체조회******/
+	@Override
+	public PageMakerDto<Review> selectedRangeReview(int currrentPage, String user_id) throws Exception {
+		//String user_id = "";
+		
+		int totReviewCount = reviewDao.countReceivedReview(user_id);	//전체 게시글 갯수
+		PageMaker pageMaker = new PageMaker(totReviewCount, currrentPage, 5, 5);
+		List<Review> reviewList = reviewDao.selectedRangeReview(pageMaker.getPageBegin(), pageMaker.getPageEnd(), user_id);
+		PageMakerDto<Review> pageMakerReviewList = new PageMakerDto<Review>(reviewList, pageMaker, totReviewCount);
+		
+		return pageMakerReviewList;
+	}
+	/************************************/
+	
+	
+	
+	
 	@Transactional
 	@Override
 	public int createReview(Review review) throws Exception {

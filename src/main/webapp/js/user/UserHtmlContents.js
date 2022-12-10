@@ -204,33 +204,9 @@ UserHtmlContents.user_received_reviewList2=function(reviewList){
                           </form>  
                             <h6 style="display:inline;color: #747794;">${review.orders.product.p_address_name}&nbsp;&nbsp;${review.orders.orders_date}</h6>
                             <p style="color: #070a57">${review.review_desc}</p>
-                            <!--<a href="#" class="reply">Reply</a>-->
                         </div>
                     </div>
-                    <!--
-                    <div class="accordion bigshop-accordian-with-icon" id="bigshopAccordianIcon" >
-                    	<div class="card">
-                                <div class="card-header" id="bigshopWithIconAccordian1">
-                                    <button class="btn" type="button" data-toggle="collapse" data-target="#bswicollapseOne" aria-expanded="true" aria-controls="bswicollapseOne">
-                                        <div class="comment-author-img" style="display:inline-block">
-			                                <img class="review-img-circle" src="img/user_profile/${review.userInfo.user_profile}" alt="">
-			                            </div>
-			                            <div class="comment-content" style="padding-left:70px;display:inline-block">
-				                            <h5 class="comment-author"><strong>${review.userInfo.user_id}</strong></h5>
-				                            <h6 style="display:inline;color: #747794;">${review.orders.product.p_address_name}&nbsp;&nbsp;${review.orders.orders_date}</h6>
-				                            <p style="color: #070a57">${review.review_desc}</p>
-				                        </div>
-                                    </button>
-                                </div>
-
-                                <div id="bswicollapseOne" class="collapse show" aria-labelledby="bigshopWithIconAccordian1" data-parent="#bigshopAccordianIcon">
-                                    <div class="card-body">
-                                        <p class="mb-0">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                                    </div>
-                                </div>
-	                    </div>
-                    </div>
-                    -->
+                    
                 </li>`;
 	}
 	var sellerList= new Array();
@@ -268,17 +244,6 @@ UserHtmlContents.user_received_reviewList2=function(reviewList){
                         <!-- Tab Content -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="description">
-                                <!--
-                                <div class="description_area">
-                                    <h5>Description</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex cum dolore, adipisci vitae quidem. Quaerat tenetur explicabo tempore beatae dolor. Quo ipsa labore, itaque ea ratione. Ratione labore quae corporis.</p>
-                                    <div class="embed-responsive embed-responsive-16by9 mb-3">
-                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tjvOOKx7Ytw?ecver=1" allowfullscreen></iframe>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic facere quos repudiandae ratione maiores accusantium suscipit, quod fugiat. Fugit quod laborum quidem, quos adipisci harum aspernatur, repudiandae, beatae expedita rerum ipsam dicta molestias et quis sapiente maiores amet laudantium minus nostrum. Nobis amet veritatis autem illo neque voluptas culpa vero iusto distinctio perspiciatis.</p>
-                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima animi ab, quis atque, sed nulla veniam quisquam amet perspiciatis, aliquam dolore tempora, consequuntur beatae quae dolor rem repellendus! Vitae architecto sequi quo eaque iusto impedit suscipit non maxime sint totam, nesciunt necessitatibus iste nulla ab, veritatis assumenda.</p>
-                                </div>
-                                -->
 		                        <div class="comment_area mb-50 clearfix">
 		                            <h5 class="mb-4">후기 ${reviewList.length}개</h5>
 		                            <ol>
@@ -305,7 +270,147 @@ UserHtmlContents.user_received_reviewList2=function(reviewList){
 
                             <div role="tabpanel" class="tab-pane fade" id="addi-info">
                                 <div class="additional_info_area">
+	                                <h5 class="mb-4">후기 ${buyerList.length}개</h5>
+		                            <ol>
+		                                <!-- Single Comment Area -->
+		                                ${
+										buyerList.map(review_item_content2).join('')	
+										}
+		                            </ol>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+		`;
+}
+
+UserHtmlContents.user_received_reviewList_paging=function(data){
+	var reviewList = data.itemList;
+	function review_item_content2(review){
+		return `<li class="single_comment_area">
+                    <div class="comment-wrapper clearfix" style="margin-bottom:40px">
+                        <div class="comment-meta">
+                            <div class="comment-author-img">
+                                <img class="review-img-circle" src="img/user_profile/${review.userInfo.user_profile}" alt="">
+                            </div>
+                        </div>
+                        <div class="comment-content submit_a_review_area " style="padding-left:20px">
+                            <h5 class="comment-author"><strong>${review.userInfo.user_id}</strong></h5>
+                            <form>
+                            <div class="stars">
+                                    <input type="radio" name="star" class="star-${review.review_point}" id="star-${review.review_point}" checked>
+                                    <label class="star-${review.review_point}" for="star-${review.review_point}">${review.review_point}</label>
+                                    <span style="width:${20 * review.review_point}%"></span>
+            				</div>
+                          </form>  
+                            <h6 style="display:inline;color: #747794;">${review.orders.product.p_address_name}&nbsp;&nbsp;${review.orders.orders_date}</h6>
+                            <p style="color: #070a57">${review.review_desc}</p>
+                        </div>
+                    </div>
+                    
+                </li>`;
+	}
+	var sellerList= new Array();
+	reviewList.filter(function(item){
+		return item.userInfo.user_id == item.orders.product.userInfo.user_id;
+	}).forEach(
+		function(item){
+			sellerList.push(item);
+			console.log("reviewer: "+item.userInfo.user_id+", 판매자: "+item.orders.product.userInfo.user_id);
+		}	
+	);
+	var buyerList = new Array();
+	reviewList.filter(function(item){
+		return item.userInfo.user_id != item.orders.product.userInfo.user_id;
+	}).forEach(
+		function(item){
+			buyerList.push(item);
+			console.log("reviewer: "+item.userInfo.user_id+", 구매자: "+item.orders.product.userInfo.user_id);
+		}	
+	);
+	/*
+	function prevPageBtn(data){
+
+		return ``;
+	}
+	*/
+	function pageBlockBtn(data){
+		let html = ``;
+		console.log('prevPage= '+data.pageMaker.prevPage);
+		if(data.pageMaker.prevPage > 0){
+			html += `<li class="page-item">
+                        <button class="page-link" onclick="changeReviewList(${data.pageMaker.prevPage});"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                   	 </li>`;
+		}
+		for(var pageNo = data.pageMaker.blockBegin; pageNo<= data.pageMaker.blockEnd; pageNo++){
+			if(data.pageMaker.curPage == pageNo){
+				html +=`<li class="page-item active"><button class="page-link" href="#">${pageNo}</button></li>`;
+			}else{
+				html +=`<li class="page-item"><button class="page-link page" onclick="changeReviewList(${pageNo})">${pageNo}</button></li>`;
+			}
+		}
+		if(data.pageMaker.curPage < data.pageMaker.totPage){
+			html +=`<li class="page-item">
+                        <button class="page-link" onclick="changeReviewList(${data.pageMaker.nextPage})"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                	 </li>`;
+		}
+		return html;
+	};
+	
+		return `<h5>받은 거래 후기</h5>
+				<div class="product_details_tab section_padding_100_0 clearfix" style="padding-top:10px">
+                        <!-- Tabs -->
+                        <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
+                            <li class="nav-item">
+                                <a href="#description" class="nav-link active" data-toggle="tab" role="tab">전체후기</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#reviews" class="nav-link" data-toggle="tab" role="tab">판매자 후기 <span class="text-muted">(${sellerList.length})</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#addi-info" class="nav-link" data-toggle="tab" role="tab">구매자 후기 <span class="text-muted">(${buyerList.length})</span></a>
+                            </li>
+                        </ul>
+                        <!-- Tab Content -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade show active" id="description">
+		                        <div class="comment_area mb-50 clearfix">
+		                            <h5 class="mb-4">후기 ${data.totRecordCount}개</h5>
+		                            <ol id='review_list'>
+		                                <!-- Single Comment Area -->
+		                                ${
+										reviewList.map(review_item_content2).join('')	
+										}
+		                            </ol>
+		                        </div>
+                                <!-- Shop Pagination Area -->
+			                    <div class="shop_pagination_area mt-5">
+			                        <nav aria-label="Page navigation">
+			                            <ul class="pagination pagination-sm justify-content-center">
+			                            
+											${pageBlockBtn(data)}
+
+			                            </ul>
+			                        </nav>
+			                    </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade" id="reviews">
+                                <div class="reviews_area">
 	                                <h5 class="mb-4">후기 ${sellerList.length}개</h5>
+		                            <ol>
+		                                <!-- Single Comment Area -->
+		                                ${
+										sellerList.map(review_item_content2).join('')	
+										}
+		                            </ol>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade" id="addi-info">
+                                <div class="additional_info_area">
+	                                <h5 class="mb-4">후기 ${buyerList.length}개</h5>
 		                            <ol>
 		                                <!-- Single Comment Area -->
 		                                ${

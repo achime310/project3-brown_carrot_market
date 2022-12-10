@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.brown_carrot_market.dto.Notice;
 import com.itwill.brown_carrot_market.dto.Orders;
 import com.itwill.brown_carrot_market.dto.Review;
 import com.itwill.brown_carrot_market.dto.UserInfo;
 import com.itwill.brown_carrot_market.service.OrdersService;
 import com.itwill.brown_carrot_market.service.ReviewService;
+import com.itwill.brown_carrot_market.util.PageMakerDto;
 
 @RestController
 public class ReviewRestController {
@@ -50,6 +52,50 @@ public class ReviewRestController {
 		resultMap.put("url", url);
 		resultMap.put("msg", msg);
 		resultMap.put("data",review);
+		return resultMap;
+	}
+	
+	//페이징 처리
+	@RequestMapping("user_received_reviewList_paging_json")
+	public Map received_reviewList_paging_json(@RequestParam(required = false, defaultValue = "1") Integer pageno, HttpServletRequest request) throws Exception{
+		System.out.println("user_received_reviewList_paging_json");
+		Map resultMap=new HashMap();
+		int code=-1;
+		PageMakerDto<Review> reviewList = null;
+		String url="user_received_reviewList_paging_json";
+		String msg="user_received_reviewList_paging_json 실패";
+		String sUserId=(String)request.getSession().getAttribute("sUserId");
+		try {
+			reviewList = reviewService.selectedRangeReview(pageno, sUserId);
+			code=1;
+			msg="user_received_reviewList_json 성공";
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		resultMap.put("code", code);
+		resultMap.put("url", url);
+		resultMap.put("msg", msg);
+		resultMap.put("data",reviewList);
+		return resultMap;
+	}
+	
+	// 게시글 리스트 반환 (REST)
+	@RequestMapping("/review_list_rest")
+	public  Map<String, Object> review_list_rest(@RequestParam(required = false, defaultValue = "1") Integer pageno, HttpServletRequest request) {
+		Map<String, Object> resultMap = new HashMap<>();	
+		PageMakerDto<Review> reviewList = null;
+		String sUserId=(String)request.getSession().getAttribute("sUserId");
+		try {
+			reviewList = reviewService.selectedRangeReview(pageno, sUserId);
+			resultMap.put("errorCode", 1); 
+			resultMap.put("errorMsg", "성공");
+			resultMap.put("data", reviewList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("errorCode", -1);
+			resultMap.put("errorMsg", "관리자에게 문의하세요");
+		}
 		return resultMap;
 	}
 	

@@ -1,6 +1,8 @@
 package com.itwill.brown_carrot_market.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,7 @@ public class ReviewDaoImpl implements ReviewDao {
 		return review.getReview_no();	//insert된 review_no Return	
 	}
 	
+	//전체 게시물 수 계산
 	@Override
 	public int countReceivedReview(String user_id) throws Exception {
 		return reviewMapper.countReceivedReview(user_id);
@@ -66,5 +69,17 @@ public class ReviewDaoImpl implements ReviewDao {
 		return reviewMapper.updateReview(review);
 	}
 
+	@Override
+	public List<Review> selectedRangeReview(int pageStart, int pageEnd,String user_id) throws Exception {
+		System.out.println(">>>reviewDaoImpl : selectedRangeReview()호출");
+		
+		Map<String, Integer>map = new HashMap<>();
+		map.put("pgaeStart", pageStart);
+		map.put("pageEnd", pageEnd);
+		map.put("user_id", 1);
+		
+		return reviewMapper.selectedRangeReview(pageStart, pageEnd, user_id);
+	}
+	
 
 }

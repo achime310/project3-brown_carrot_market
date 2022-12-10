@@ -14,6 +14,7 @@ public interface ReviewMapper {
 	 */
 	public int createReview(Review review);
 
+	//받은리뷰 전체 게시글 수 계산
 	public int countReceivedReview(String user_id);
 	
 	public List<Review> findReceivedReview(String user_id);
@@ -30,4 +31,6 @@ public interface ReviewMapper {
 	
 	public int updateReview(Review review);
 	
+	//리뷰 전체조회--페이징 처리
+	public List<Review> selectedRangeReview(int pageStart, int pageEnd, String user_id);
 }

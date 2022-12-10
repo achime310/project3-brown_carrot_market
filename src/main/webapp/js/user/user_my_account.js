@@ -1,3 +1,22 @@
+/*
+게시물 리스트 변경
+*/
+function changeReviewList(pageno){
+	$.ajax({
+		url: "user_received_reviewList_paging_json",
+		method: "post",
+		data: {"pageno" :pageno},
+		dataType: "json",
+		success:function(jsonResult){
+			console.log(jsonResult);
+			if(jsonResult.code > 0){
+				$('#my-account-content').html(UserHtmlContents.user_received_reviewList_paging(jsonResult.data));
+			}
+		}
+	});
+}
+
+
 $(document).ready(function(){
 	toastr.options.positionClass = "toast-top-right";
 	/* [마이페이지]user_view *********************************/

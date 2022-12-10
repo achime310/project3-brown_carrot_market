@@ -107,22 +107,15 @@
 	                                         <th>
 	                                         	<c:if test="${notice.notice_fix eq '1'}">
 	                                        			&nbsp;&nbsp;<span class="badge badge-danger">중요</span>
-	                                        		</c:if>
-	                                        		<c:if test="${notice.notice_fix eq '0'}">
-	                                        			&nbsp;&nbsp;<span class="badge badge-normal">일반</span>
-	                                        		</c:if>
+                                        		</c:if>
+                                        		<c:if test="${notice.notice_fix eq '0'}">
+                                        			&nbsp;&nbsp;<span class="badge badge-normal">일반</span>
+                                        		</c:if>
 	                                         </th>
 	                                        <td>
-	                                       
-	                                       
 	                                        	<a href="notice_view?notice_no=${notice.notice_no}&pageno=${noticeList.pageMaker.curPage}">
 	                                        		${notice.notice_title}
-	                                        		
-	                                        		
-	                                        		 
 	                                        	</a>
-	                                        	
-	                                        
 	                                        </td>
 	                                        <td>${notice.notice_date}</td>
 	                                        <td>${notice.notice_count}</td>
@@ -168,6 +161,7 @@
                             </ul>
                         </nav>
                     </div>
+                    
                 </div>
             </div>
             

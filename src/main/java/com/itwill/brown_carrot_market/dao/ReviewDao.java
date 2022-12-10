@@ -23,4 +23,8 @@ public interface ReviewDao {
 	int removeReview(int review_no) throws Exception;
 	
 	int updateReview(Review review) throws Exception;
+	
+	//페이징 처리 리뷰 조회
+	List<Review> selectedRangeReview(int pageStart, int pageEnd, String user_id) throws Exception;
+
 }

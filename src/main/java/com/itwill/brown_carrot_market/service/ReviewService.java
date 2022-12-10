@@ -3,6 +3,7 @@ package com.itwill.brown_carrot_market.service;
 import java.util.List;
 
 import com.itwill.brown_carrot_market.dto.Review;
+import com.itwill.brown_carrot_market.util.PageMakerDto;
 
 public interface ReviewService {
 	
@@ -28,4 +29,7 @@ public interface ReviewService {
 	int removeReviewImgByName(String review_img_name) throws Exception;
 	
 	int updateReview(Review review) throws Exception;
+	
+	PageMakerDto<Review> selectedRangeReview(int currrentPage, String user_id) throws Exception;
+
 }

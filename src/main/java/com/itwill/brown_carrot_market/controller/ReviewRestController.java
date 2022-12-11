@@ -61,11 +61,14 @@ public class ReviewRestController {
 		System.out.println("user_received_reviewList_paging_json");
 		Map resultMap=new HashMap();
 		int code=-1;
+		List<Review> reviewListAll= null;
 		PageMakerDto<Review> reviewList = null;
+				
 		String url="user_received_reviewList_paging_json";
 		String msg="user_received_reviewList_paging_json 실패";
 		String sUserId=(String)request.getSession().getAttribute("sUserId");
 		try {
+			reviewListAll= reviewService.findReceivedReview(sUserId);
 			reviewList = reviewService.selectedRangeReview(pageno, sUserId);
 			code=1;
 			msg="user_received_reviewList_json 성공";
@@ -77,28 +80,10 @@ public class ReviewRestController {
 		resultMap.put("url", url);
 		resultMap.put("msg", msg);
 		resultMap.put("data",reviewList);
+		resultMap.put("listAll",reviewListAll);
 		return resultMap;
 	}
-	
-	// 게시글 리스트 반환 (REST)
-	@RequestMapping("/review_list_rest")
-	public  Map<String, Object> review_list_rest(@RequestParam(required = false, defaultValue = "1") Integer pageno, HttpServletRequest request) {
-		Map<String, Object> resultMap = new HashMap<>();	
-		PageMakerDto<Review> reviewList = null;
-		String sUserId=(String)request.getSession().getAttribute("sUserId");
-		try {
-			reviewList = reviewService.selectedRangeReview(pageno, sUserId);
-			resultMap.put("errorCode", 1); 
-			resultMap.put("errorMsg", "성공");
-			resultMap.put("data", reviewList);
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("errorCode", -1);
-			resultMap.put("errorMsg", "관리자에게 문의하세요");
-		}
-		return resultMap;
-	}
-	
+		
 	@RequestMapping("user_received_reviewList_json")
 	public Map received_reviewList_json(HttpServletRequest request) throws Exception{
 		System.out.println("user_received_reviewList_json");

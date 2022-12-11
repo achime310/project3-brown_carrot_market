@@ -285,8 +285,10 @@ UserHtmlContents.user_received_reviewList2=function(reviewList){
 		`;
 }
 
-UserHtmlContents.user_received_reviewList_paging=function(data){
-	var reviewList = data.itemList;
+UserHtmlContents.user_received_reviewList_paging=function(jsonResult){
+	var reviewList = jsonResult.data.itemList;
+	var data = jsonResult.data;
+	var listAll = jsonResult.listAll;
 	function review_item_content2(review){
 		return `<li class="single_comment_area">
                     <div class="comment-wrapper clearfix" style="margin-bottom:40px">
@@ -312,7 +314,7 @@ UserHtmlContents.user_received_reviewList_paging=function(data){
                 </li>`;
 	}
 	var sellerList= new Array();
-	reviewList.filter(function(item){
+	listAll.filter(function(item){
 		return item.userInfo.user_id == item.orders.product.userInfo.user_id;
 	}).forEach(
 		function(item){
@@ -321,7 +323,7 @@ UserHtmlContents.user_received_reviewList_paging=function(data){
 		}	
 	);
 	var buyerList = new Array();
-	reviewList.filter(function(item){
+	listAll.filter(function(item){
 		return item.userInfo.user_id != item.orders.product.userInfo.user_id;
 	}).forEach(
 		function(item){
@@ -343,11 +345,11 @@ UserHtmlContents.user_received_reviewList_paging=function(data){
                         <button class="page-link" onclick="changeReviewList(${data.pageMaker.prevPage});"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                    	 </li>`;
 		}
-		for(var pageNo = data.pageMaker.blockBegin; pageNo<= data.pageMaker.blockEnd; pageNo++){
-			if(data.pageMaker.curPage == pageNo){
-				html +=`<li class="page-item active"><button class="page-link" href="#">${pageNo}</button></li>`;
+		for(var pageno = data.pageMaker.blockBegin; pageno<= data.pageMaker.blockEnd; pageno++){
+			if(data.pageMaker.curPage == pageno){
+				html +=`<li class="page-item active"><button class="page-link" href="#">${pageno}</button></li>`;
 			}else{
-				html +=`<li class="page-item"><button class="page-link page" onclick="changeReviewList(${pageNo})">${pageNo}</button></li>`;
+				html +=`<li class="page-item"><button class="page-link page" onclick="changeReviewList(${pageno})">${pageno}</button></li>`;
 			}
 		}
 		if(data.pageMaker.curPage < data.pageMaker.totPage){

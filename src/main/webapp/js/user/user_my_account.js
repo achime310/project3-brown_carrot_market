@@ -10,7 +10,7 @@ function changeReviewList(pageno){
 		success:function(jsonResult){
 			console.log(jsonResult);
 			if(jsonResult.code > 0){
-				$('#my-account-content').html(UserHtmlContents.user_received_reviewList_paging(jsonResult.data));
+				$('#my-account-content').html(UserHtmlContents.user_received_reviewList_paging(jsonResult));
 			}
 		}
 	});

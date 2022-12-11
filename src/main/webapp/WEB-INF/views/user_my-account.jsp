@@ -600,8 +600,8 @@
 						method:'POST',
 						/*dataType:'json',*/
 						success:function(jsonResult){
-							console.log(jsonResult.data);
-							$('#my-account-content').html(UserHtmlContents.user_received_reviewList_paging(jsonResult.data));
+							console.log(jsonResult);
+							$('#my-account-content').html(UserHtmlContents.user_received_reviewList_paging(jsonResult));
 						}
 					});
 				e.preventDefault();

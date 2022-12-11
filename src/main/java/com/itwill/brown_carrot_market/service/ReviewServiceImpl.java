@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService{
 		//String user_id = "";
 		
 		int totReviewCount = reviewDao.countReceivedReview(user_id);	//전체 게시글 갯수
-		PageMaker pageMaker = new PageMaker(totReviewCount, currrentPage, 5, 5);
+		PageMaker pageMaker = new PageMaker(totReviewCount, currrentPage, 2, 3);	//페이징 설정 (#,#, 페이지당 글갯수, 페이지 블록갯수)
 		List<Review> reviewList = reviewDao.selectedRangeReview(pageMaker.getPageBegin(), pageMaker.getPageEnd(), user_id);
 		PageMakerDto<Review> pageMakerReviewList = new PageMakerDto<Review>(reviewList, pageMaker, totReviewCount);
 		
